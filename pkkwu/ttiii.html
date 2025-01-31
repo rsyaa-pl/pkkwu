@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DimsuMolagi</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Navbar Styling */
+        nav {
+            background: #f26522;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            font-family: 'Impact', sans-serif;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2e2500;
+            text-shadow: 
+            -1px -1px 0 white, /* Tepi atas kiri */
+            1px -1px 0 white,  /* Tepi atas kanan */
+            -1px 1px 0 white,  /* Tepi bawah kiri */
+            1px 1px 0 white;   /* Tepi bawah kanan */
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: wheat;
+            text-shadow: 
+            -1px -1px 0 black, /* Tepi atas kiri */
+            1px -1px 0 black,  /* Tepi atas kanan */
+            -1px 1px 0 black,  /* Tepi bawah kiri */
+            1px 1px 0 black;   /* Tepi bawah kanan */
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+            border-bottom: 2px solid #000; 
+            
+        }
+        nav a::after {
+            content: ""; /* Membuat pseudo-element kosong */
+            position: absolute; 
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px; /* Ketebalan garis bawah */
+            background-color: #000; /* Warna garis */
+            transition: width 0.3s ease; /* Animasi untuk efek garis */
+          }
+          
+          nav a:hover::after {
+            width: 100%; /* Memperluas garis hingga sepanjang teks saat hover */
+          }
+
+        /* Popup Styling */
+        .popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-container img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        h2 {
+            color: #df7702;
+        }
+        
+       
+        /* Section Styling */
+        section {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-family: 'Impact', sans-serif;
+            margin-bottom: 10px;
+           
+        }
+
+
+        .section-title img {
+            border-radius: 50%;
+            margin-top: -40px;
+            opacity: 0; /* Initially invisible */
+            transform: scale(0.8); /* Initially smaller */
+            animation: fadeIn 2s forwards; /* Animation for fade-in and scale */
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .group-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            background-color:  #f26522;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.808);
+            max-width: 90%;
+        }
+
+        .group-names {
+            width: 45%;
+            text-align: left;
+            color: white;
+        }
+
+        .group-names ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .group-names li {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .group-img img {
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        /* Pengertian Styling */
+        .pengertian {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:  #f26522;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 90%;
+        }
+
+        .pengertian img {
+            width: 300px;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .pengertian-text {
+            text-align: left;
+            color: #d6dde4;
+        }
+
+        .pengertian-text h2 {
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+        }
+
+        .pengertian-text p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        /* Alat & Bahan Styling */
+        .content-scroll {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            margin-bottom: 30px;
+        }
+
+        .content-scroll img {
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        .content-scroll.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Pembuatan Styling */
+        
+
+       
+
+       
+        .card {
+            width: 320px;
+            height: 400px;
+            background:#ff6600;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-align: center;
+            padding: 20px;
+            color: white;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .content h2 {
+            font-size: 22px;
+            margin: 10px 0;
+            color: #776311;
+        }
+
+        .content p {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .rating span {
+            font-size: 25px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .rating span:hover,
+        .rating span.active {
+            color: gold;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: white;
+            color: #ff6a00;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background: #cc5200;
+            color: white;
+            transform: scale(1.1);
+        }
+   
+        h2{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .bod {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            align-items: flex-start;
+        }
+        .table-container, .chart-container {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+        .result {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+        }
+        .highlight {
+            color: #00d9ff;
+            font-weight: bold;
+        }
+        .card-title{
+            color: red;
+            text-decoration: none;
+            text-shadow: 
+            -1px -1px 0 rgb(255, 250, 250), /* Tepi atas kiri */
+            1px -1px 0 rgb(255, 234, 234),  /* Tepi atas kanan */
+            -1px 1px 0 rgb(255, 255, 255),  /* Tepi bawah kiri */
+            1px 1px 0 rgb(255, 255, 255);   /* Tepi bawah kanan */
+            transition: color 0.3s, transform 0.3s;
+            font-size: 30px;
+        }
+        /* Resetting some default styles */
+/* Resetting some default styles */
+
+  
+  
+  
+  /* Footer Styling */
+  footer {
+    background-color: #333; /* Warna hitam */
+    color: #fff; /* Teks putih */
+    padding: 30px 0;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .footer-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #ff6600; /* Warna oranye */
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .footer-bottom p {
+    font-size: 14px;
+  }
+  
+  #scrollToTop {
+    background-color: #ff6600; /* Warna oranye */
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #scrollToTop:hover {
+    background-color: #e65c00; /* Warna oranye gelap saat hover */
+  }
+  
+  .suggestion-form {
+    margin-top: 20px;
+  }
+  
+  #suggestionInput {
+    padding: 10px;
+    width: 60%;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #submitSuggestion {
+    background-color: #ff6600; /* Warna oranye */
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #submitSuggestion:hover {
+    background-color: #e65c00; /* Warna oranye gelap saat hover */
+  }
+  
+  /* Styling for response message */
+  #responseMessage {
+    display: none; /* Tersembunyi secara default */
+    background-color: #28a745; /* Warna hijau untuk respons sukses */
+    color: white;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Menempatkan pesan di tengah halaman */
+    z-index: 1000; /* Agar pesan tampil di atas konten lainnya */
+  }
+  
+  .hidden {
+    display: none;
+  }
+  .gallery {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 0;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+.gallery-item {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-item .caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.gallery-item:hover .caption {
+    opacity: 1;
+}
+
+.gallery-item.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Scroll animation */
+.gallery-item[data-visible="true"] {
+    opacity: 1;
+    transform: scale(1);
+}
+.ody {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    background-color: #f4f4f4;
+    gap: 20px;
+}
+.car1d {
+    display: flex;
+    background: linear-gradient(135deg, #ff7f50, #ff8c00);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    transition: transform 0.3s;
+}
+
+.car1d:hover {
+    transform: translateY(-10px);
+}
+
+.car1d-image {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.car1d-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.car1d-content {
+    flex: 2;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.car1d-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #d6dde4;
+}
+
+.car1d-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #d6dde4;
+}
+
+.btn {
+    background-color: #fff;
+    color: #ff7f50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #ff8c00;
+    color: white;
+}
+
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <!-- Navbar -->
+   <!-- Navbar -->
+   <nav>
+    <div class="logo" id="logo">DimsuMolagi</div>
+    <ul>
+        <li><a href="#page1">BERANDA</a></li>
+        <li><a href="#pengertian">PENGERTIAN</a></li>
+        <li><a href="#page2">ALAT & BAHAN</a></li>
+        <li><a href="#menu">PEMBUATAN</a></li>
+        <li><a href="#hasil">HASIL</a></li>
+        <li><a href="#hpp">HPP</a></li>
+        <li><a href="#dkk">DOKUMENTASI</a></li>
+    </ul>
+</nav>
+
+<!-- Popup Container -->
+<div class="popup-container" id="popup">
+    <div class="popup-close" id="popupClose">&times;</div>
+    <img src="img/fre.jpg" alt="DimsuMolagi Logo">
+</div>
+
+    <!-- Page 1 -->
+    <section id="page1"><br><br>
+        <div class="section-title"><img src="img/log.png" width="120px" height="120px" alt=""></div>
+        <div class="group-info">
+            <div class="group-names">
+                <ul>
+                    <h1>NAMA KELOMPOK:</h1>
+                    <li> 1) Alifah Siska Nur Aini (2)</li>
+                    <li> 2) Ayu Fitriana Sari (6)</li>
+                    <li> 3) Dahlia Anggita Salam (11)</li>
+                    <li> 4) Muhammad Mahesa Anggarestu (22)</li>
+                    <li> 5) Ria Mustika Sari (34)</li>
+                    <li> 6) Rio Putra Prasetyono (35)</li>
+                </ul>
+            </div>
+            <div class="group-img">
+                <img src="img/kelom.jpg" alt="Group">
+            </div>
+        </div>
+    </section><br>
+
+    <!-- Pengertian -->
+    <section id="pengertian">
+        <div class="section-title">PENGERTIAN</div>
+        <div class="pengertian">
+            <img src="img/dimsum.jpg" height="200px" alt="Pengertian Image">
+            <div class="pengertian-text">
+                <h3>Apa Itu DimsuMolagi?</h3>
+                <p>DimsuMolagi adalah sebuah platform yang bertujuan untuk memperkenalkan kelezatan dan seni penyajian dimsum. Melalui website ini, Anda dapat menemukan berbagai informasi seputar bahan, alat, dan cara pembuatan dimsum yang autentik.</p>
+            </div>
+        </div>
+    </section><br><br><br><br>
+
+    <!-- Alat & Bahan -->
+    <section>
+        <div class="section-title" >ALAT & BAHAN</div>
+
+       <div class="ody"  id="page2">
+        <div class="car1d">
+            <div class="car1d-image">
+                <img src="img/pooo.jpg" alt="Image 1">
+            </div>
+            <div class="car1d-content">
+                <h2>Alat<h2>
+                <p>1.Kukusan 2. Mangkuk 3. Pisau 4. Rolling pin 5. Cetakan dimsum (opsional) 6. Sendok 7. Piring atau nampan 8. Kuas makanan (opsional) 9. Panci atau wajan 10. Blender</p>
+               
+            </div>
+        </div>
+    
+        <!-- Card 2 -->
+        <div class="car1d">
+            <div class="car1d-image">
+                <img src="img/bahan.jpg" alt="Image 2">
+            </div>
+            <div class="car1d-content">
+                <h2>Bahan"</h2>
+                <p>1.penyedap rasa 2.daging ayam 3.minyak wijen 4.daun bawang 5.lada bubuk 6.kulit dimsum 7.tepung tapioka</p>
+               
+            </div>
+        </div>
+       </div>
+    
+        <script>
+            function showAlert(cardName) {
+                alert(cardName + " button clicked!");
+            }
+        </script> 
+    </section>
+
+    <!-- Pembuatan -->
+    <section id="menu">
+        <div class="section-title" >CARA PEMBUATAN</div>
+       
+        <video controls width="600">
+            <source src="tutor.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+          
+        
+    </section><br>
+    <section id="hasil">
+        <div class="section-title" >HASIL</div>
+      <center>  <div class="card">
+            <img src="img/hasil.jpg" alt="Produk">
+            <div class="content">
+                <h2>DimsuMolagi</h2>
+                <p>harga terjangkau dan bergizi, hanya "Rp.5000/porsi"</p>
+                <div class="rating">
+                    <span onclick="rateStar(1)">★</span>
+                    <span onclick="rateStar(2)">★</span>
+                    <span onclick="rateStar(3)">★</span>
+                    <span onclick="rateStar(4)">★</span>
+                    <span onclick="rateStar(5)">★</span>
+                </div>
+                <a href="coba.html" class="button">Beli Sekarang</a>
+            </div>
+        </div></center>
+        <script>
+            function rateStar(index) {
+                let stars = document.querySelectorAll('.rating span');
+                stars.forEach((star, i) => {
+                    if (i < index) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
+        </script>
+    
+    </section><br><br>
+
+    <script>
+        
+        // Smooth scroll for navbar links
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Scroll Effect for Alat & Bahan
+        window.addEventListener("scroll", () => {
+            const content = document.getElementById("content");
+            const content2 = document.getElementById("content2");
+
+            const triggerPosition = window.innerHeight / 1.3;
+
+            if (content.getBoundingClientRect().top < triggerPosition) {
+                content.classList.add("active");
+            }
+
+            if (content2.getBoundingClientRect().top < triggerPosition) {
+                content2.classList.add("active");
+            }
+        });
+
+    </script>
+    <br><br><br><br>
+   
+   <center> <div class="section-title" >HPP</div><br></center>
+    <section id="hpp">
+    <div class="bod" >
+       
+    <div class="container">
+        <div class="table-container">
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Nilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Modal</td>
+                        <td>Rp <span id="modal">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Biaya Bahan Baku</td>
+                        <td>Rp <span id="bahanBaku">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Produk Dijual</td>
+                        <td><span id="produkDijual">0</span> biji</td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Porsi Terjual</td>
+                        <td><span id="porsiTerjual">0</span> porsi</td>
+                    </tr>
+                    <tr>
+                        <td>Harga per Porsi</td>
+                        <td>Rp <span id="hargaPerPorsi">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Total Penjualan</td>
+                        <td>Rp <span id="totalPenjualan">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Cara Perhitungan:</h3>
+            <p><strong>Total Penjualan:</strong> Harga per Porsi x Jumlah Porsi Terjual</p>
+            <p><strong>Laba Kotor:</strong> Modal - Biaya Bahan Baku + Total Penjualan</p>
+            <p><strong>Laba Bersih:</strong> Laba Kotor - Biaya Bahan Baku</p>
+            <p class="result">Laba Bersih: <span class="highlight" id="labaBersih">Rp 0</span></p>
+        </div>
+        <div class="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+</div>
+</section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Data Penjualan
+            const modal = 60000;
+            const biayaBahanBaku = 56000;
+            const totalProdukDijual = 61;
+            const jumlahPorsiTerjual = 17;
+            const hargaPerPorsi = 5000;
+        
+            // Perhitungan
+            const totalPendapatan = jumlahPorsiTerjual * hargaPerPorsi;
+            const labaKotor = modal - biayaBahanBaku + totalPendapatan;
+            const labaBersih = labaKotor - biayaBahanBaku;
+        
+            // Render Data ke Halaman
+            document.getElementById('modal').innerText = modal.toLocaleString();
+            document.getElementById('bahanBaku').innerText = biayaBahanBaku.toLocaleString();
+            document.getElementById('produkDijual').innerText = totalProdukDijual;
+            document.getElementById('porsiTerjual').innerText = jumlahPorsiTerjual;
+            document.getElementById('hargaPerPorsi').innerText = hargaPerPorsi.toLocaleString();
+            document.getElementById('totalPenjualan').innerText = totalPendapatan.toLocaleString();
+            document.getElementById('labaBersih').innerText = `Rp ${labaBersih.toLocaleString()}`;
+        
+            // Chart.js dengan Animasi Bertahap
+            const ctx = document.getElementById('chart').getContext('2d');
+            const data = {
+                labels: ['Modal', 'Biaya Bahan Baku', 'Pendapatan'],
+                datasets: [{
+                    data: [0, 0, 0], // Mulai dari 0 agar animasi tampak
+                    backgroundColor: ['#007BFF', '#FF6347', '#28A745'],
+                }]
+            };
+        
+            const chart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true,
+                        duration: 2000 // Durasi total animasi
+                    }
+                }
+            });
+        
+            // Animasi Bertahap
+            const finalData = [modal, biayaBahanBaku, totalPendapatan];
+            let step = 0;
+        
+            function animateChart() {
+                if (step < finalData.length) {
+                    chart.data.datasets[0].data[step] = finalData[step];
+                    chart.update();
+                    step++;
+                    setTimeout(animateChart, 1000); // Delay antar bagian
+                }
+            }
+        
+            // Set up IntersectionObserver to trigger the animation when the HPP section is in view
+            const hppSection = document.getElementById('hpp');
+        
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Trigger the chart animation when the HPP section is in view
+                        setTimeout(animateChart, 500); // Start the animation with a small delay
+                        observer.disconnect(); // Stop observing once the animation starts
+                    }
+                });
+            }, { threshold: 0.5 }); // Trigger when at least 50% of the section is in view
+        
+            // Start observing the HPP section
+            observer.observe(hppSection);
+        });
+         // Mulai animasi setelah 500ms
+
+         // Get elements
+         const logo = document.getElementById('logo');
+         const popup = document.getElementById('popup');
+         const popupClose = document.getElementById('popupClose');
+ 
+         // Show popup when logo is clicked
+         logo.addEventListener('click', () => {
+             popup.style.display = 'flex';
+         });
+ 
+         // Close popup when close button is clicked
+         popupClose.addEventListener('click', () => {
+             popup.style.display = 'none';
+         });
+
+         function submitSuggestion() {
+            // Mengambil input teks dari pengguna
+            var suggestionText = document.getElementById("suggestionInput").value;
+          
+            // Jika input kosong, beri peringatan
+            if (suggestionText === "") {
+              alert("Silakan masukkan saran Anda!");
+              return;
+            }
+          
+            // Menampilkan pesan "Saran Anda Kami Terima"
+            var responseMessage = document.getElementById("responseMessage");
+            responseMessage.style.display = "block"; // Menampilkan pesan
+            responseMessage.innerHTML = "Saran Anda Kami Terima";
+          
+            // Mengosongkan kolom input setelah kirim
+            document.getElementById("suggestionInput").value = "";
+            
+            // Menyembunyikan pesan setelah beberapa detik
+            setTimeout(function() {
+              responseMessage.style.display = "none";
+            }, 3000); // Menghilangkan pesan setelah 3 detik
+          }
+          
+          function scrollToTop() {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }
+          
+          
+    </script>
+    <footer>
+        <div class="footer-container">
+            <center><img src="img/log.png" alt="" width="100px" height="100px"></center>
+          <div class="footer-content">
+           
+            <h2>My Awesome Website</h2>
+            <p>Follow us on social media</p>
+            <div class="social-icons">
+              <a href="#" class="icon facebook">Facebook</a>
+              <a href="#" class="icon twitter">Twitter</a>
+              <a href="#" class="icon instagram">Instagram</a>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 My Awesome Website. All Rights Reserved.</p>
+            <div class="suggestion-form">
+              <input type="text" id="suggestionInput" placeholder="Tulis saran Anda..." />
+              <button id="submitSuggestion" onclick="submitSuggestion()">Kirim</button>
+            </div>
+            <button id="scrollToTop" onclick="scrollToTop()">Back to Top</button>
+          </div>
+        </div>
+      </footer>
+      
+      <!-- Div untuk menampilkan pesan di tengah halaman -->
+      <div id="responseMessage" class="hidden">Saran Anda Kami Terima</div>
+      
+      <div class="gallery" id="dkk">
+        <!-- Gallery Item 1 -->
+        <div class="gallery-item" data-image="photo1.jpg">
+            <img src="img/k1.jpg" alt="Artistic Image 1">
+            <div class="caption">Dokumentasi</div>
+        </div>
+
+        <!-- Gallery Item 2 -->
+        <div class="gallery-item" data-image="photo2.jpg">
+            <img src="img/k2.jpg" alt="Artistic Image 2">
+            <div class="caption">Dokumentasi</div>
+        </div>
+
+        <!-- Gallery Item 3 -->
+        <div class="gallery-item" data-image="photo3.jpg">
+            <img src="img/k3.jpg" alt="Artistic Image 3">
+            <div class="caption">Dokumentasi</div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll animation trigger
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        const checkVisibility = () => {
+            galleryItems.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    item.classList.add('visible');
+                    item.setAttribute('data-visible', 'true');
+                }
+            });
+        };
+
+        // Initial check
+        checkVisibility();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility);
+    </script>
+      
+</body>
+</html>
